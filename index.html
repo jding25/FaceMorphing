@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Images of the Russian Empire</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap"
+      rel="stylesheet"
+    />
+    <link href="styles/style.css" rel="stylesheet" type="text/css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      h1 {
+        font-family: "Kaushan Script", cursive;
+        text-align: center;
+        color: #333;
+      }
+
+      h2 {
+        color: #555;
+      }
+
+      p {
+        color: #777;
+        line-height: 1.4;
+        text-align: center; /* Center paragraphs */
+        max-width: 800px; /* Limit paragraph width */
+        margin: 20px; /* Add margin to paragraphs */
+      }
+
+      .container {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px;
+      }
+
+      .imgContainer {
+        text-align: center;
+      }
+
+      .imgContainer h3 {
+        color: #444;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ddd;
+        padding: 5px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      li {
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <title>Images of the Russian Empire</title>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap"
+          rel="stylesheet"
+        />
+        <link href="styles/style.css" rel="stylesheet" type="text/css" />
+      </head>
+      <body>
+        <h1>Face Morphing</h1>
+        <h3>Claire Ding</h3>
+
+        <h2>Introduction</h2>
+
+        <p>
+          In this project, our goal is to create a "morph" animation that blends
+          your face with another person's face. We will also calculate the
+          average face of a group of people and use it as a reference to make a
+          caricature of my face. Morphing involves smoothly changing the shape
+          and color of the image. The challenging part is controlling the shape
+          change by accurately mapping key facial features like the eyes, mouth,
+          chin, and ears between the two images. This project will help us
+          explore both artistic and technical aspects of image manipulation
+          while maintaining a clear and straightforward approach.
+        </p>
+
+        <h2>Part 1</h2>
+        <h3>Defining Correspondances:</h3>
+
+        <p>
+          In this project, I tried to morph my face with a cartoon face. Let's
+          name the other girl Hattie. I used cpselect (Matlab) to genereted
+          correspondances between two images. Then, I computed the midway shape
+          of the points, and computed Delaunay triangulation at this midway
+          shape to ensure the best performance of morphoing.
+        </p>
+        <div class="container">
+          <div class="imgContainer">
+            <h4>My Face with correspondances</h4>
+            <img
+              src="Me_with_dots.png"
+              alt="My face Small.png"
+              width="300"
+            />
+          </div>
+
+          <div class="imgContainer">
+            <h4>Hattie's face with correspondances</h4>
+            <img
+              src="Hattie_with_dots.png"
+              alt="Hattie's face Small.png"
+              width="300"
+            />
+          </div>
+
+          <div class="imgContainer">
+            <h4>Midway triangulation</h4>
+            <img
+              src="triangulation.png"
+              alt="Midway triangulation.jpg"
+              width="300"
+              height="300"
+            />
+          </div>
+        </div>
+        <div class="container">
+          <div class="imgContainer">
+            <h4>Hattie triangulation</h4>
+            <img
+              src="Hattie_triangulation.png"
+              alt="Hattie Triangulation.jpg"
+              width="350"
+            />
+          </div>
+
+          <div class="imgContainer">
+            <h4>My triangulation</h4>
+            <img
+              src="Me_triangulation.png"
+              alt="My triangulation.jpg"
+              width="350"
+            />
+          </div>
+          </div>
+        </dic>
+
+
+        <p></p>
+        <h2>Part 2</h2>
+        <h3>Computing the midway face</h3>
+        <p>
+          Before creating the complete morph sequence, begin by generating the
+          intermediary face between my images A and B. This entails the
+          following steps: Calculate the average facial shape by determining the
+          average position of each keypoint in both faces. Apply a warp to align
+          both faces with this average shape. Blend the colors of the two faces
+          together. <br />The primary challenge lies in the warping process,
+          which necessitates the implementation of an affine warp for each
+          triangle within the triangulation from the original images to this new
+          shape. This involves computing an affine transformation matrix A
+          between corresponding triangles: A = computeAffine(tri1_pts,
+          tri2_pts). <br />A series of these transformation matrices will be
+          required to perform an inverse warping. I generated a mask using
+          polygon functions in Python. Then, I utilized interpolation functions
+          for better results.
+        </p>
+        <div class="imgContainer">
+          <h3>Halfway face</h3>
+          <img
+            src="halfway.png"
+            alt="Halfway face.jpg"
+            width="400"
+          />
+        </div>
+
+        <p></p>
+        <h2>Part 3</h2>
+        <h3>Computing the midway face</h3>
+        <p>The gif of my face morphing to Hattie...</p>
+        <div class="imgContainer">
+          <h4>Midway face</h4>
+          <img
+            src="output.gif"
+            alt="Morphing face.gif"
+            width="400"
+          />
+        </div>
+
+        <p></p>
+
+        <h2>Part 4</h2>
+        <h3>The "Mean Face" of a population</h3>
+        <p>
+          In this section, I picked dataset Danes, which contains different
+          faces and annotations. Using the keypoints already annotated on the
+          data, I computed the average face shape of the whole population
+          (excluding the gray ones), and the average male face shape and female
+          face shape.
+        </p>
+        <div class="imgContainer">
+          <h4>Male Mean face</h4>
+          <img
+            src="male_mean_faces/average_male_face Small.png"
+            alt="Halfway face.jpg"
+            width="300"
+          />
+        </div>
+        <div class="imgContainer">
+          <h4>Female Mean face</h4>
+          <img
+            src="female_mean_faces/average_female_face Small.png"
+            alt="Halfway face.jpg"
+            width="300"
+          />
+        </div>
+        <div class="imgContainer">
+          <h4>Mean face</h4>
+          <img
+            src="neutral_mean_faces/average_face Small.png"
+            alt="Halfway face.jpg"
+            width="300"
+          />
+        </div>
+
+        <p>
+          Then I morphed each of the faces in the dataset into the average
+          shape. Here are some examples:
+        </p>
+        <div class="container">
+          <div class="imgContainer">
+            <img
+              src="male_mean_faces/05_averaged Small.png"
+              alt="My face.jpg"
+              width="200"
+            />
+          </div>
+          <div class="imgContainer">
+
+            <img
+              src="male_mean_faces/07_averaged Small.png"
+              alt="Hattie's face.jpg"
+              width="200"
+            />
+          </div>
+          <div class="imgContainer">
+            
+            <img
+              src="male_mean_faces/10_averaged Small.png"
+              alt="Midway face.jpg"
+              width="200"
+            />
+          </div>
+        
+        <div class="imgContainer">
+          <img
+            src="male_mean_faces/11_averaged Small.png"
+            alt="My face.jpg"
+            width="200"
+          />
+        </div>
+        <div class="imgContainer">
+
+          <img
+            src="male_mean_faces/13_averaged Small.png"
+            alt="Hattie's face.jpg"
+            width="200"
+          />
+        </div>
+      </div>
+      <div class="container">
+        <div class="imgContainer">
+          <img
+            src="female_mean_faces/08_averaged Small.png"
+            alt="My face Small.png"
+            width="200"
+          />
+        </div>
+        <div class="imgContainer">
+
+          <img
+            src="female_mean_faces/12_averaged Small.png"
+            alt="Hattie's face Small.png"
+            width="200"
+          />
+        </div>
+        <div class="imgContainer">
+          
+          <img
+            src="female_mean_faces/14_averaged Small.png"
+            alt="Midway face Small.png"
+            width="200"
+          />
+        </div>
+      
+      <div class="imgContainer">
+        <img
+          src="female_mean_faces/15_averaged Small.png"
+          alt="My face Small.png"
+          width="200"
+        />
+      </div>
+      <div class="imgContainer">
+
+        <img
+          src="female_mean_faces/22_averaged Small.png"
+          alt="Hattie's face Small.png"
+          width="200"
+        />
+      </div>
+    </div>
+        <p>
+          Then I warped my face into the average geometry, and the average face
+          warped into your geometry.
+        </p>
+        <div class="container">
+          <div class="imgContainer">
+            <h4>My Face to Mean Face</h4>
+            <img
+              src="my_faces/me_to_mean.jpg"
+              alt="My face Small.png"
+              width="300"
+            />
+          </div>
+
+          <div class="imgContainer">
+            <h4>Mean Face to My Face</h4>
+            <img
+              src="my_faces/mean_to_me.jpg"
+              alt="Mean's face Small.png"
+              width="300"
+            />
+          </div>
+        </div>
+
+        <p></p>
+
+        <h2>Part 5</h2>
+        <h3>Caricatures: Extrapolating from the mean</h3>
+        <p>
+          A caricature of your face by extrapolating from the female population
+          mean.
+        </p>
+        <div class="container">
+          <div class="imgContainer">
+            <h4>Extra Me...</h4>
+            <img
+              src="my_faces/Unknown-23.png"
+              alt="emir_g_edges Small.png"
+              width="450"
+            />
+          </div>
+
+        </div>
+
+      
+        <h2>Bells & Whistles</h2>
+
+        <h3>Male version of me</h3>
+        <img src="my_faces/male_me.png" width="450"/>
+        <a href="https://youtu.be/0ZUzKxHdmmI">
+        <h3>Face morphing video</h3></a>
+    
+        <!-- <iframe width="420" height="315"src="https://youtu.be/0ZUzKxHdmmI?autoplay=1&mute=1"> </iframe> -->
+      </div>
+      </body>
+    </html>
+  </body>
+</html>
