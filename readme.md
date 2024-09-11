@@ -1,5 +1,3 @@
-Name: Claire Ding
-SID: 3036587854
 1. All of the code are contained in main.ipnyb, except for selecting points for correspondances which I did in Matlab. (I've also included the Matlab instructions in a commented sections)
 2. Files ended with mat or json are purely correpondences and points.
 3. Folders: female mean faces: only warped towards female average face; male mean faces: are only wared towards male mean faces; and neutral mean faces: both geners.
